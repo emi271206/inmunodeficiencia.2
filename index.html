@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma IDP: Inmunodeficiencias Primarias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Función principal para cambiar entre las 3 pestañas grandes
+        function showMainTab(tabId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.main-section').forEach(el => el.classList.add('hidden'));
+            
+            // Reiniciar estilos de los botones de navegación
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('border-b-4', 'border-white', 'text-white', 'font-bold');
+                btn.classList.add('text-gray-300', 'hover:text-white', 'font-medium');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            // Resaltar el botón activo
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('text-gray-300', 'font-medium');
+            activeBtn.classList.add('border-b-4', 'border-white', 'text-white', 'font-bold');
+        }
+
+        // Función para mostrar/ocultar acordeones interactivos
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.textContent = "−"; // Menos
+            } else {
+                el.classList.add('hidden');
+                icon.textContent = "+"; // Más
+            }
+        }
+
+        // Función para revelar respuestas de casos clínicos
+        function revealAnswer(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR FIJA -->
+    <header class="bg-slate-900 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="py-5 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-2xl font-extrabold text-white mb-4 md:mb-0 tracking-tight">
+                    <span class="text-teal-400">IDP</span> Central
+                </div>
+                <!-- Pestañas -->
+                <nav class="flex space-x-2 md:space-x-8">
+                    <button id="btn-general" onclick="showMainTab('general')" class="nav-btn border-b-4 border-white text-white font-bold py-2 px-1 transition-all">Público General</button>
+                    <button id="btn-estudiantes" onclick="showMainTab('estudiantes')" class="nav-btn text-gray-300 hover:text-white font-medium py-2 px-1 transition-all">Estudiantes</button>
+                    <button id="btn-docentes" onclick="showMainTab('docentes')" class="nav-btn text-gray-300 hover:text-white font-medium py-2 px-1 transition-all">Docentes</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="flex-grow container mx-auto px-6 max-w-6xl py-10">
+
+        <!-- ==========================================
+             SECCIÓN 1: PÚBLICO GENERAL (Tonos Esmeralda/Turquesa)
+             ========================================== -->
+        <section id="general" class="main-section block animate-fade-in">
+            
+            <div class="bg-gradient-to-r from-teal-500 to-emerald-600 rounded-2xl shadow-xl p-8 md:p-12 text-white mb-10">
+                <h1 class="text-4xl font-extrabold mb-4">¿Qué pasa cuando tus defensas fallan?</h1>
+                <p class="text-lg md:text-xl text-teal-50 max-w-3xl leading-relaxed">
+                    Las Inmunodeficiencias Primarias (IDP) son alteraciones de nacimiento. Imagina que tu sistema inmunológico (tus defensas) nace como el de un "bebé prematuro" que nunca madura. No te protegen bien y te enfermas seguido. Aquí te explicamos lo que necesitas saber.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- Conceptos básicos -->
+                <div class="bg-white rounded-xl shadow-md p-8 border-t-4 border-teal-500">
+                    <h2 class="text-2xl font-bold text-teal-800 mb-4">¿Cómo se siente vivir con esto?</h2>
+                    <p class="text-gray-600 mb-4">
+                        Muchas veces las personas con IDP se ven completamente sanas por fuera. Sin embargo, tienen que evitar multitudes, comer fuera y lidiar con dolores de cabeza, de estómago o cansancio extremo que nadie más ve.
+                    </p>
+                    <div class="bg-teal-50 p-4 rounded-lg border border-teal-100">
+                        <p class="text-teal-900 text-sm font-semibold">💡 Recuerda:</p>
+                        <p class="text-teal-800 text-sm">No es que busquen excusas o sean "hipocondríacos". Su cuerpo está luchando el doble todos los días.</p>
+                    </div>
+                </div>
+
+                <!-- 10 señales (Acordeón interactivo basado en JMF) -->
+                <div class="bg-white rounded-xl shadow-md p-8 border-t-4 border-emerald-500">
+                    <h2 class="text-2xl font-bold text-emerald-800 mb-4">Señales de Alerta en Niños</h2>
+                    <p class="text-gray-600 mb-4 text-sm">La Fundación Jeffrey Modell nos invita a estar atentos a estas señales clave:</p>
+                    
+                    <div class="space-y-3">
+                        <button onclick="toggleAccordion('alerta1')" class="w-full flex justify-between items-center bg-gray-50 p-3 rounded-lg hover:bg-emerald-50 font-medium text-left text-gray-700">
+                            1. Infecciones en el oído recurrentes <span id="icon-alerta1" class="text-emerald-500 font-bold text-xl">+</span>
+                        </button>
+                        <div id="alerta1" class="hidden p-3 text-sm text-gray-600 bg-white border border-gray-100 rounded-lg">
+                            Tener 4 o más infecciones de oído (otitis) nuevas en un solo año.
+                        </div>
+
+                        <button onclick="toggleAccordion('alerta2')" class="w-full flex justify-between items-center bg-gray-50 p-3 rounded-lg hover:bg-emerald-50 font-medium text-left text-gray-700">
+                            2. Neumonías graves <span id="icon-alerta2" class="text-emerald-500 font-bold text-xl">+</span>
+                        </button>
+                        <div id="alerta2" class="hidden p-3 text-sm text-gray-600 bg-white border border-gray-100 rounded-lg">
+                            Sufrir 2 o más neumonías en el lapso de un año.
+                        </div>
+
+                        <button onclick="toggleAccordion('alerta3')" class="w-full flex justify-between items-center bg-gray-50 p-3 rounded-lg hover:bg-emerald-50 font-medium text-left text-gray-700">
+                            3. Uso prolongado de antibióticos <span id="icon-alerta3" class="text-emerald-500 font-bold text-xl">+</span>
+                        </button>
+                        <div id="alerta3" class="hidden p-3 text-sm text-gray-600 bg-white border border-gray-100 rounded-lg">
+                            Tomar antibióticos por 2 meses o más con muy poco efecto o mejora.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             SECCIÓN 2: ESTUDIANTES DE MEDICINA (Tonos Índigo/Azul)
+             ========================================== -->
+        <section id="estudiantes" class="main-section hidden animate-fade-in">
+            
+            <div class="bg-gradient-to-r from-indigo-700 to-blue-600 rounded-2xl shadow-xl p-8 md:p-12 text-white mb-10">
+                <h1 class="text-4xl font-extrabold mb-4">Errores Innatos de la Inmunidad (IDP)</h1>
+                <p class="text-lg md:text-xl text-indigo-100 max-w-3xl leading-relaxed">
+                    Existen más de 550 defectos genéticos caracterizados que afectan al sistema inmune. Su detección temprana (Tamizaje Neonatal SCID) previene el daño orgánico irreversible y disminuye la mortalidad pediátrica.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-10">
+                <!-- Conceptos Clínicos -->
+                <div class="md:col-span-2 bg-white rounded-xl shadow-md p-8 border-t-4 border-indigo-600">
+                    <h2 class="text-2xl font-bold text-indigo-900 mb-4">Pilares de Tratamiento e Innovación</h2>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-indigo-500 mr-2 mt-1">🔬</span>
+                            <div><strong>SPIRIT® Analyzer (JMF):</strong> Herramienta de IA que cruza datos clínicos para ayudar al médico a sospechar y detectar IDP tempranamente.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-indigo-500 mr-2 mt-1">🩸</span>
+                            <div><strong>Terapia de Reemplazo (IDF):</strong> Uso de inmunoglobulina (IVIG/SCIG) de por vida para pacientes con defectos de anticuerpos. Requiere donadores de plasma constantes.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-indigo-500 mr-2 mt-1">🧬</span>
+                            <div><strong>Terapia Génica y TPH:</strong> El Trasplante de Células Madre Hematopoyéticas es el único tratamiento curativo actual para IDP severas como el Síndrome de Inmunodeficiencia Combinada Grave (SCID).</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Fast Facts -->
+                <div class="bg-indigo-50 rounded-xl p-6 shadow-inner border border-indigo-100">
+                    <h3 class="text-xl font-bold text-indigo-800 mb-3">Red Flags Clínicas</h3>
+                    <p class="text-sm text-indigo-700 mb-4">Cuidado con la presentación atípica. Considera IDP si hay:</p>
+                    <ul class="list-disc pl-5 text-sm text-indigo-800 space-y-2 font-medium">
+                        <li>Abscesos profundos recurrentes en piel u órganos.</li>
+                        <li>Infecciones por patógenos oportunistas (Pneumocystis, hongos atípicos).</li>
+                        <li>Antecedentes familiares de infecciones severas o muertes infantiles de causa desconocida.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Caso Clínico Estudiantes -->
+            <div class="bg-white rounded-xl shadow-md p-8 border border-gray-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Caso Clínico Interactivo #1</h2>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Viñeta Clínica</span>
+                </div>
+                <p class="text-gray-700 mb-4 bg-gray-50 p-4 rounded text-lg border-l-4 border-blue-500">
+                    Paciente femenina de 25 años acude a consulta por fatiga crónica, artralgias y dolor abdominal. Refiere historia desde la infancia de ausencias escolares por neumonías repetitivas, sinusitis bacteriana crónica y hospitalizaciones ocasionales. Menciona que un médico previo le dijo que "su sistema inmune era como el de un recién nacido". Sus niveles séricos muestran IgG < 200 mg/dL, con IgA e IgM también muy disminuidas. Respuestas ausentes a vacunas proteicas.
+                </p>
+                <div class="flex items-center space-x-4">
+                    <button onclick="revealAnswer('caso1-respuesta')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md">
+                        Revelar Diagnóstico
+                    </button>
+                    <p id="caso1-respuesta" class="hidden text-green-700 font-bold text-xl bg-green-50 px-4 py-2 rounded-lg border border-green-200">
+                        Inmunodeficiencia Común Variable (IDCV)
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             SECCIÓN 3: DOCENTES Y ESPECIALISTAS (Tonos Violeta/Púrpura)
+             ========================================== -->
+        <section id="docentes" class="main-section hidden animate-fade-in">
+            
+            <div class="bg-gradient-to-r from-purple-800 to-fuchsia-700 rounded-2xl shadow-xl p-8 md:p-12 text-white mb-10">
+                <h1 class="text-4xl font-extrabold mb-4">Recursos Docentes y Políticas de Salud</h1>
+                <p class="text-lg md:text-xl text-purple-100 max-w-3xl leading-relaxed">
+                    Integración de casos clínicos complejos, análisis de guías internacionales (IDF/JMF) y el impacto de las políticas públicas mexicanas (FUMENI) para la enseñanza médica de posgrado.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-10">
+                
+                <!-- Políticas y Activismo -->
+                <div class="bg-white rounded-xl shadow-md p-8 border-t-4 border-fuchsia-600">
+                    <h2 class="text-2xl font-bold text-purple-900 mb-4">Incidencia en Políticas Públicas (FUMENI)</h2>
+                    <p class="text-gray-700 mb-4">
+                        Para la enseñanza de la Salud Pública, es vital analizar el caso mexicano liderado por FUMENI.
+                    </p>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-3">
+                        <li><strong>Gastos Catastróficos:</strong> Promoción de leyes para definir a las IDP como enfermedades de gasto catastrófico, garantizando el acceso estatal a trasplantes y terapias biológicas.</li>
+                        <li><strong>Red Nacional:</strong> Conformación de directorios médicos y el programa "Defensas para la Vida" para financiar terapias en niños sin seguridad social.</li>
+                        <li><strong>Tamizaje Universal:</strong> Impulso de foros sobre el derecho a la salud (TREC/KREC) para el tamizaje neonatal ampliado obligatorio.</li>
+                    </ul>
+                </div>
+
+                <!-- Recursos para Enseñanza -->
+                <div class="bg-white rounded-xl shadow-md p-8 border-t-4 border-purple-600">
+                    <h2 class="text-2xl font-bold text-purple-900 mb-4">Fuentes para Revisión Bibliográfica</h2>
+                    <div class="space-y-4">
+                        <a href="https://www.info4pi.org/library/scientific-publications" target="_blank" class="block p-4 border border-purple-100 rounded-lg hover:bg-purple-50 transition-colors">
+                            <h3 class="font-bold text-purple-800">Publicaciones Científicas JMF</h3>
+                            <p class="text-sm text-gray-600">Accede a toolkits regionales y bases de datos sobre prevalencia global y estudios genéticos.</p>
+                        </a>
+                        <a href="https://primaryimmune.org/research-and-clinical-care" target="_blank" class="block p-4 border border-purple-100 rounded-lg hover:bg-purple-50 transition-colors">
+                            <h3 class="font-bold text-purple-800">Guías Clínicas IDF</h3>
+                            <p class="text-sm text-gray-600">Protocolos de autorización de tratamientos, ensayos clínicos actuales y manejo de comorbilidades (hepáticas, pulmonares, psicológicas).</p>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Caso Clínico Avanzado Docentes -->
+            <div class="bg-purple-50 rounded-xl shadow-md p-8 border border-purple-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-purple-900">Caso Clínico Avanzado de Discusión (Caso "Maty")</h2>
+                    <span class="bg-purple-200 text-purple-900 text-xs font-bold px-3 py-1 rounded-full uppercase">Seminario</span>
+                </div>
+                <p class="text-gray-700 mb-6 bg-white p-5 rounded-lg border border-purple-100 shadow-sm leading-relaxed">
+                    Lactante masculino de 14 meses. Presenta eccema severo crónico de difícil control, petequias recurrentes y epistaxis desde los 3 meses de edad. Historia de múltiples cuadros de otitis media supurativa y una neumonía por <em>S. pneumoniae</em>. <br><br>
+                    <strong>Laboratorios:</strong> Plaquetas 30,000/mm³ (microplaquetas en frotis periférico). IgM disminuida, IgA e IgE elevadas. El paciente es candidato para Trasplante de Médula Ósea (curativo) financiado a través de ONGs.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button onclick="revealAnswer('caso2-respuesta')" class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-md w-full sm:w-auto">
+                        Identificar Síndrome
+                    </button>
+                    <div id="caso2-respuesta" class="hidden flex-1 text-purple-900 font-bold text-lg bg-purple-100 px-4 py-2 rounded-lg border border-purple-300">
+                        Síndrome de Wiskott-Aldrich (Clásica triada: Inmunodeficiencia, Microtrombocitopenia y Eccema).
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800 mt-auto">
+        <p>Información consolidada basada en <a href="https://www.info4pi.org/" class="text-teal-400 hover:underline">JMF</a>, <a href="https://primaryimmune.org/" class="text-teal-400 hover:underline">IDF</a> y <a href="https://fumeni.org.mx/" class="text-teal-400 hover:underline">FUMENI</a>.</p>
+        <p class="mt-2">Herramienta educativa diseñada para el análisis de las Inmunodeficiencias Primarias.</p>
+    </footer>
+
+</body>
+</html>
